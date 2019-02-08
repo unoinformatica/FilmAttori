@@ -9,6 +9,7 @@ using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
 {
+    // controller dei film
     public class MoviesController : Controller
     {
         private readonly MvcMovieContext _context;
