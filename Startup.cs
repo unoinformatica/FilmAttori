@@ -80,6 +80,7 @@ namespace MvcMovie
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            // Modifica fatta da Diego
 
             app.UseMvc(routes =>
             {
