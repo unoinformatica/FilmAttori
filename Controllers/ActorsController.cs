@@ -30,6 +30,7 @@ namespace MvcMovie.Controllers {
             return View(actorVM);
         }
 
+        #region Actors Create
         // GET: Actors/Create
         public IActionResult Create() {
             return View(new Actor {
@@ -51,7 +52,9 @@ namespace MvcMovie.Controllers {
             }
             return View(actor);
         }
+        #endregion
 
+        #region Actors Delete
         // GET: Actors/Delete/5
         public async Task<IActionResult> Delete(int? id) {
             if (id == null) {
@@ -76,6 +79,8 @@ namespace MvcMovie.Controllers {
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
         #region Edit Actor Nfos
 
         // GET: Actor/Nfos/5
