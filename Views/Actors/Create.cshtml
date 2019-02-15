@@ -1,0 +1,70 @@
+﻿@model MvcMovie.Models.Actor
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Actor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <fieldset>
+                Actor Gender:<br> <select id="ActorGender" name="ActorGender" style="width:290px; height:38px;">
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                    <option selected="selected" value="2">Unknown</option>
+                              </select>
+                <hr />
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<br>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+@*<label asp-controller="Actors" asp-action="Index" method="get"></label>
+    <select asp-for="Actors" asp-items="Model.Gender">
+        <option value="">All</option>
+    </select>*@
+
+@*<label asp-for="ActorGender" class="control-label"></label>
+    <input asp-for="ActorGender" class="form-control" />
+    <span asp-validation-for="ActorGender" class="text-danger"></span>*@
+
+@*<form asp-controller="Actor" asp-action="Index" method="get">
+    <p>
+        <select asp-for="Gender" asp-items="Model.Gender">
+            <option value="">All</option>
+        </select>
+    </p>*@
+
+@*<div class="form-group">
+       <label asp-for="ActorGender" class="control-label"></label>
+       <input asp-for="ActorGender" class="form-control" />
+       <span asp-validation-for="ActorGender" class="text-danger"></span>
+    </div>*@
+@*<div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>*@

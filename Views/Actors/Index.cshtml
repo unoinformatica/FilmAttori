@@ -1,8 +1,0 @@
-﻿@model MvcMovie.Models.ActorViewModel
-@{
-    ViewData["Title"] = "Index";
-}
-<h1>Actors</h1>
-@foreach (var actor in Model.Actors) {
-    <p>Nome: @actor.FullName</p>
-}
