@@ -1,0 +1,7 @@
+.vs/
+MvcMovie/bin/
+MvcMovie/obj/
+bin/
+obj/
+appsettings.json
+MvcMovie.csproj.user

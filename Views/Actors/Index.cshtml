@@ -1,0 +1,53 @@
+﻿@model MvcMovie.Models.ActorViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Actors</h1>
+<p>
+    <a asp-action="Create">Add New Actor</a>
+</p>
+<form asp-controller="Actor" asp-action="Index" method="get">
+    <p>
+        Actor: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Actors[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Actors[0].BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Actors[0].ActorGender)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Actors) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActorGender)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+         }
+    </tbody>
+</table>
+@*@foreach (var actor in Model.Actors) {
+        <p>Nome: @actor.FullName</p>
+    }*@
