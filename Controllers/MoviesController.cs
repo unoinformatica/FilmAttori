@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MvcMovie.Data;
 using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
@@ -13,16 +14,31 @@ namespace MvcMovie.Controllers
     public class MoviesController : Controller
     {
         private readonly MvcMovieContext _context;
+        private readonly IMvcMovieRepository _repo;
 
-        public MoviesController(MvcMovieContext context)
-        {
+        public MoviesController(MvcMovieContext context, IMvcMovieRepository repo) {
             _context = context;
+            _repo = repo;
         }
 
-        #region snippet_SearchGenre
+        // test action to demonstrate add actor to movie (add 4,3 e 4,1)
+        // es. http://localhost:2568/Movies/AddActorToMovie?movieId=4&actorId=1
+        [HttpGet]
+        public async Task<IActionResult> AddActorToMovie(int movieId, int actorId) {
+            _repo.AddActorToMovie(movieId, actorId);
+            return View();
+        }
+
+        // test action to demonstrate get actors from movie
+        [HttpGet]
+        public async Task<IActionResult> GetActorsFromMovie(int movieId) {
+            var actorList = await _repo.GetActorsFromMovie(movieId);
+            // dovrebbe restituire John Travolta e Cameron Diaz
+            return View();
+        }
+
         // GET: Movies
-        public async Task<IActionResult> Index(string movieGenre, string searchString)
-        {
+        public async Task<IActionResult> Index(string movieGenre, string searchString) {
             #region snippet_LINQ
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.Movie
@@ -51,7 +67,6 @@ namespace MvcMovie.Controllers
 
             return View(movieGenreVM);
         }
-        #endregion
 
         [HttpPost]
         public string Index(string searchString, bool notUsed)
@@ -59,7 +74,6 @@ namespace MvcMovie.Controllers
             return "From [HttpPost]Index: filter on " + searchString;
         }
 
-        #region snippet_details
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -76,7 +90,6 @@ namespace MvcMovie.Controllers
 
             return View(movie);
         }
-        #endregion
 
         // GET: Movies/Create
         public IActionResult Create()
@@ -158,7 +171,6 @@ namespace MvcMovie.Controllers
             return View(movie);
         }
 
-        #region snippet_delete
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -167,8 +179,7 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {
                 return NotFound();
@@ -187,7 +198,6 @@ namespace MvcMovie.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        #endregion
 
         private bool MovieExists(int id)
         {

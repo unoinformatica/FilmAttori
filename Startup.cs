@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
+using MvcMovie.Data;
 
 namespace MvcMovie
 {
@@ -25,7 +26,6 @@ namespace MvcMovie
 
         // This method gets called by the runtime. 
         // Use this method to add services to the container.
-#region snippet_ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -36,16 +36,18 @@ namespace MvcMovie
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<MvcMovieContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+
+            // vengono registrati i repository con lifetime per HTTP request (DI)
+            services.AddScoped<IMvcMovieRepository, MvcMovieRepository>();
+            //services.AddScoped<IMvcMovieRepository, DummyRepository>();
         }
-#endregion
 
 #if UseSqlite
-#region snippet_UseSqlite
+        #region snippet_UseSqlite
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -61,7 +63,7 @@ namespace MvcMovie
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
-#endregion
+        #endregion
 #endif
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

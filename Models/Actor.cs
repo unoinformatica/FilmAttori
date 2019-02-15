@@ -22,5 +22,11 @@ namespace MvcMovie.Models {
 
         [Required]
         public Gender ActorGender { get; set; }
+
+        public string Nationality { get; set; }
+
+        // 1 attore può avere da 0:N film
+        //public ICollection<Movie> Movies { get; set; }
+
     }
 }
